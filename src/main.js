@@ -1,14 +1,30 @@
+// The Vue build version to load with the `import` command
+// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import './plugins/vuetify'
-import App from './App.vue'
-import { store } from './store'
+import App from './App'
 import router from './router'
-import axios from 'axios'
+import { store } from './store'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import AlertMsg from './components/shared/AlertMsg.vue'
 
+Vue.use(Vuetify, { theme: {
+  primary: '#00B1A8',
+  secondary: '#00C853',
+  accent: '#00C853',
+  error: '#FF1744',
+  info: '#2196F3',
+  success: '#4CAF50',
+  warning: '#FF5722'
+}})
+Vue.component('app-alert', AlertMsg)
 Vue.config.productionTip = false
-axios.defaults.baseURL = 'http://www.omdbapi.com/?apikey=b76b385c&page=1&type=movie&Content-Type=application/json'
+
+/* eslint-disable no-new */
 new Vue({
-  render: h => h(App),
+  el: '#app',
+  router,
   store,
-  router
-}).$mount('#app')
+  components: { App },
+  template: '<App/>'
+})

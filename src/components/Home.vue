@@ -1,74 +1,55 @@
 <template>
-<h1>Hello home page</h1>
+  <v-container fluid>
+    <v-slide-y-transition mode="out-in">
+      <v-layout row align-left>
+        <v-flex xs12 md4>
+          <cartpage @keydown.esc="getFromKeyPad()"></cartpage>
+        </v-flex>
+        <v-flex xs12 md8>
+          <productpage></productpage>
+        </v-flex>
+      </v-layout>
+    </v-slide-y-transition>
+  </v-container>
 </template>
-
 <script>
-import { mapGetters } from 'vuex'
+import productpage from './home/Productpage'
+import cartpage from './home/CartPage'
 export default {
+  created () {
+    window.addEventListener('keyup', this.getFromKeyBoard)
+  },
+  components: { productpage, cartpage },
   data () {
     return {
-      selected: false,
-      pqty: '1'
     }
   },
-  computed: {
-    ...mapGetters(['products'])
-  },
   methods: {
-    addToCart (product) {
-      product.qty = 1
-      product.selected = true
-      this.$store.dispatch('addToCart', product)
-    },
-    cartSelect (id) {
-      this.$store.dispatch('selectCart', id)
+    getFromKeyBoard (event) {
+      var _key = (window.Event) ? event.which : event.keyCode
+      if (_key > 95 && _key < 106) {
+        String.fromCharCode(event.keyCode - 48)
+      }
     }
   }
 }
 </script>
-<style>
- .size {
-   width:50;
-   height:90;
- }
- .v-card--reveal {
-   align-items: center;
-   justify-content: center;
-   opacity: 0.5;
-   width: 100%;
- }
- .v-card h3.display-1 {
-   font-size: 24px !important
- }
- .tvalue {
-   font-size: 22px;
-   size: 30px;
- }
- .flexy {
-   float: right;
-   margin-right: 20px;
- }
- .divid {
-   margin-right: 20px;
- }
- table {
-  font-size: 16px;
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
 
-.trt {
-  background-color: #dddddd;
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h1, h2 {
+  font-weight: normal;
 }
-.flexy2 {
-  float: right;
-  margin-right: 10px;
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
 }
 </style>
